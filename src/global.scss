@@ -24,3 +24,23 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+
+.divider{
+    height: 3px;
+    background-color: #464646;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .notification{
+    height: 15px;
+    width: 15px;
+    border-radius: 15px;
+    background-color: rgb(241, 55, 42);
+    position: absolute;
+    right: 5%;
+    top:50%;
+    transform: translate(0%, -50%);
+  }

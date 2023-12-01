@@ -8,8 +8,16 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'sender',
     pathMatch: 'full'
+  },
+  {
+    path: 'sender',
+    loadChildren: () => import('./sender/sender.module').then( m => m.SenderPageModule)
+  },
+  {
+    path: 'recipient',
+    loadChildren: () => import('./recipient/recipient.module').then( m => m.RecipientPageModule)
   },
 ];
 

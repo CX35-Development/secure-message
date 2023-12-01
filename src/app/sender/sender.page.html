@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Secure Message System</ion-title> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" #content> 
+  <ion-grid> 
+    <ion-row>   
+      <ion-col  style="border-right: 3px solid grey;" >
+        <ion-card style="margin-inline: 0px;" >
+          <ion-card-header>
+            <ion-card-title>Send a Message </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>  
+            <ion-button  color="danger" (click)="getRecipientPublicKey()">Retrieve Recipient Public Key</ion-button>
+            <br/> <br>
+            <ion-textarea readonly label="Recipient Public Key" labelPlacement="stacked" fill="outline" mode="md" rows="2" [value]="recipientKey"></ion-textarea>  
+            <br>
+            <ion-textarea  label="Write the message you would like to send" labelPlacement="stacked" fill="outline" rows="3" mode="md" [(ngModel)]="message"></ion-textarea> 
+            <br>
+            <ion-button  expand="full" (click)="encryptMessage()">Encrypt</ion-button>
+            <br/> 
+            <ion-textarea readonly label="Encrypted Message" labelPlacement="stacked" fill="outline" rows="3" mode="md" [(ngModel)]="encryptedMessage"></ion-textarea> 
+            <br/>
+            <ion-button expand="full" (click)="sendMessage()" *ngIf="encryptedMessage" color="success">Send</ion-button> 
+          </ion-card-content>
+        </ion-card> 
+        <ion-card style="margin-inline: 0px; "> 
+          <ion-card-header> 
+              <ion-card-title>Message Received  </ion-card-title> 
+              <div *ngIf="messageChanged" class="notification"></div>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-textarea [style.--border-color]="messageChanged ? 'red': 'grey'" label="Encrypted Message" labelPlacement="stacked" fill="outline" rows="3" mode="md" [(ngModel)]="keyMgr.messageFromRecipient"></ion-textarea> 
+            <br/>   
+            <ion-button expand="full" (click)="decryptReceivedMessage()">Decrypt</ion-button>
+            <br/>
+            <ion-textarea  label="Unencrypted Message" readonly labelPlacement="stacked" fill="outline" rows="3" mode="md" [(ngModel)]="unencryptedMessage"></ion-textarea> 
+            <br/>
+            </ion-card-content>
+        </ion-card>
+        <ion-row>
+          <ion-col>
+            <ion-text>Generated Keys</ion-text> 
+            <br> 
+            <ion-button (click)="decryptPrivateKey()">Get My Keys</ion-button>
+            <br> <br>
+            <ion-input  label="Provide a password for your keys" clearOnEdit="true" labelPlacement="stacked" mode="md" fill="outline" type="password" [(ngModel)]="senderPassword" ></ion-input>
+            <br>
+            <ion-button expand="full" (click)="generateSenderKeys()">Generate Keys</ion-button>  
+            <br>
+            <ion-textarea label="Private Key" labelPlacement="stacked" fill="outline" mode="md" rows="3" [value]="keyPair.privateKey"></ion-textarea> 
+            <br/>
+            <ion-button *ngIf="decrypted" size="small" expand="full" color="dark" (click)="decryptPrivateKey()">Decrypt Private Key</ion-button>
+            <ion-button *ngIf="!decrypted" size="small" expand="full" color="dark" (click)="encryptSenderPrivateKey()">Encrypt Private Key</ion-button>
+            <br> 
+            <ion-textarea label="Public Key" labelPlacement="stacked" fill="outline" mode="md" rows="3" [value]="keyPair.publicKey"></ion-textarea> 
+            <br/> 
+          </ion-col>
+        </ion-row> 
+      </ion-col> 
+    </ion-row>
+  </ion-grid>  
+</ion-content>
